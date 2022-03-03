@@ -1,0 +1,145 @@
+<!-- Config -->
+<script type="text/javascript">
+  'use strict';
+  /*global RED*/
+  RED.nodes.registerType('socketio-config', {
+      category: 'config',
+      defaults: {
+          uri: {
+              value: 'http://localhost:3000',
+              required: true
+          },
+          options: {
+              value: '{ "forceNew": true }',
+              required: false
+          }
+      },
+      label: function() {
+          return this.uri;
+      }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="socketio-config">
+  <div class="form-row">
+    <label for="node-config-input-uri"><i class="fa fa-globe"></i> URI</label>
+    <input type="text" id="node-config-input-uri">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-options"><i class="fa fa-globe"></i> Options</label>
+    <input type="text" id="node-config-input-options">
+  </div>
+</script>
+
+<!-- Listener -->
+<script type="text/javascript">
+  /*global RED*/
+  RED.nodes.registerType('socketio-listener', {
+      category: 'input',
+      inputs: 0,
+      outputs: 1,
+      color: '#D8BFD8',
+      icon: 'socketio.png',
+      paletteLabel: 'Socket.IO Listener',
+      defaults: {
+          server: {
+              value: '',
+              type: 'socketio-config'
+          },
+          eventname: {
+              value: '',
+              required: true
+          },
+		  roomname: {
+              value: ''
+          },
+          name: {
+              value: ''
+          }
+      },
+      label: function() {
+          return this.name || this.eventname|| this.roomname || 'Socket.IO Listener';
+      }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="socketio-listener">
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-globe"></i> Server</label>
+    <input type="text" id="node-input-server" placeholder="Server">
+  </div>
+  <div class="form-row">
+    <label for="node-input-eventname"><i class="icon-tasks"></i> Event name</label>
+    <input type="text" id="node-input-eventname" placeholder="Event name">
+  </div>
+   <div class="form-row">
+    <label for="node-input-roomname"><i class="icon-tasks"></i> Room name</label>
+    <input type="text" id="node-input-roomname" placeholder="Room name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="socketio-listener">
+  <p>Socket.IO Listener</p>
+  <p>Connects to a web server using Socket.IO Client and sets listener with the 'event name' and 'room name' that you specified.</p>
+  <p>The outgoing <code>msg.payload</code> will be set to the data that came from the server.</p>
+</script>
+
+<!-- Emitter -->
+<script type="text/javascript">
+  /*global RED*/
+  RED.nodes.registerType('socketio-emitter', {
+      category: 'output',
+      inputs: 1,
+      outputs: 0,
+      color: '#D8BFD8',
+      icon: 'socketio.png',
+      paletteLabel: 'Socket.IO Emitter',
+      defaults: {
+          server: {
+              value: '',
+              type: 'socketio-config'
+          },
+          eventname: {
+              value: ''
+          },
+		  roomname: {
+              value: ''
+          },
+          name: {
+              value: ''
+          }
+      },
+      label: function() {
+          return this.name || this.eventname|| this.roomname || 'Socket.IO Emitter';
+      }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="socketio-emitter">
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-globe"></i> Server</label>
+    <input type="text" id="node-input-server" placeholder="Server">
+  </div>
+    <div class="form-row">
+      <label for="node-input-eventname"><i class="icon-tasks"></i> Event name</label>
+      <input type="text" id="node-input-eventname" placeholder="Event name">
+    </div>
+	   <div class="form-row">
+      <label for="node-input-roomname"><i class="icon-tasks"></i> Room name</label>
+      <input type="text" id="node-input-roomname" placeholder="Room name">
+    </div>
+    <div class="form-row">
+      <label for="node-input-name">Message</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="socketio-emitter">
+<p>Socket.IO Emitter</p>
+<p>Connects to a web server using Socket.IO Client and emits message with the 'event name' to the 'room name' that you specified. </p>
+<p>The incoming <code>msg.payload</code> will be the emitted data.</p>
+</script>
