@@ -26,6 +26,9 @@
   "dependencies": {
     "socket.io-client": "^4.5.1"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "node-red": {
     "version": ">=1.0.0",
     "nodes": {
